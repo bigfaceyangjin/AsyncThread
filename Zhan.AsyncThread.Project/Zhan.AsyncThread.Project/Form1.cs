@@ -58,11 +58,11 @@ namespace Zhan.AsyncThread.Project
             Console.WriteLine("*********************** btnAdvance_Click_Start "+Thread.CurrentThread.ManagedThreadId.ToString("x2") +" *********************************");
             Action<string> act1 = this.DoNothing;
             IAsyncResult result = null;
-            //AsyncCallback callback = ar => {
-            //    Console.WriteLine(object.ReferenceEquals(result,ar)+result.AsyncState.ToString());
-            //    Console.WriteLine($"计算结束 {Thread.CurrentThread.ManagedThreadId.ToString("x2")}"); 
-            //};
-            result= act1.BeginInvoke("btnAdvance_Click", null, null);
+			//AsyncCallback callback = ar => {
+			//    Console.WriteLine(object.ReferenceEquals(result,ar)+result.AsyncState.ToString());
+			//    Console.WriteLine($"计算结束 {Thread.CurrentThread.ManagedThreadId.ToString("x2")}"); 
+			//};
+			result = act1.BeginInvoke("btnAdvance_Click", x => { Console.WriteLine("donothing的回调"); }, null);
             //怎样保证最后结果代码在子线程计算之后
             //方法一：利用iscompled属性判断异步是否完成 从而延迟主线程执行代码的时间
             { 
@@ -86,7 +86,7 @@ namespace Zhan.AsyncThread.Project
             Console.WriteLine("Do Something else......");
             Console.WriteLine("Do Something else......");
             Console.WriteLine("Do Something else......");
-            //result.AsyncWaitHandle.WaitOne();   //组织主线程，等待子线程任务完成
+            result.AsyncWaitHandle.WaitOne();   //组织主线程，等待子线程任务完成
             //result.AsyncWaitHandle.WaitOne(-1); //同上 
             //result.AsyncWaitHandle.WaitOne(1000);//不管任务有没有完成 等待1000ms后主线程开始工作 限时等待
 
@@ -99,10 +99,15 @@ namespace Zhan.AsyncThread.Project
                 //异步调用
                 IAsyncResult asyncResult = func.BeginInvoke("yj", c => {
                     //一般情况下这个返回值时再回调中要用到
-                    int r= func.EndInvoke(c);
-                    Console.WriteLine(c.AsyncState); }, "牛皮");
-                //Console.WriteLine("func.EndInvoke(asyncResult):"+ func.EndInvoke(asyncResult));
-            }
+                    //int r= func.EndInvoke(c);
+                    Console.WriteLine($"{c.AsyncState} {Thread.CurrentThread.ManagedThreadId.ToString("x2")}"); 
+				}, "牛皮");
+
+                Console.WriteLine("func.EndInvoke(asyncResult):"+ func.EndInvoke(asyncResult));
+				asyncResult.AsyncWaitHandle.WaitOne();
+
+			}
+			
             Console.WriteLine("计算结果真的完成了");
             Console.WriteLine($"*********************** btnAdvance_Click_End {Thread.CurrentThread.ManagedThreadId.ToString("x2")} *********************************");
         }
