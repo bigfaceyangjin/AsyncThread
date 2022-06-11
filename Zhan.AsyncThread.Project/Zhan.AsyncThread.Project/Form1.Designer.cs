@@ -28,61 +28,121 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btnAdvance = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(41, 69);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(138, 36);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "同步方法";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(41, 168);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(138, 37);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "异步方法";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // btnAdvance
-            // 
-            this.btnAdvance.Location = new System.Drawing.Point(41, 263);
-            this.btnAdvance.Name = "btnAdvance";
-            this.btnAdvance.Size = new System.Drawing.Size(138, 35);
-            this.btnAdvance.TabIndex = 2;
-            this.btnAdvance.Text = "AsyncAdvance";
-            this.btnAdvance.UseVisualStyleBackColor = true;
-            this.btnAdvance.Click += new System.EventHandler(this.btnAdvance_Click);
-            // 
-            // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(817, 471);
-            this.Controls.Add(this.btnAdvance);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Name = "Form1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
-            this.ResumeLayout(false);
+			this.btn_tongbu = new System.Windows.Forms.Button();
+			this.btn_Async = new System.Windows.Forms.Button();
+			this.btnAdvance = new System.Windows.Forms.Button();
+			this.btnThreads = new System.Windows.Forms.Button();
+			this.btnThreadPool = new System.Windows.Forms.Button();
+			this.btn_Task = new System.Windows.Forms.Button();
+			this.btnParallel = new System.Windows.Forms.Button();
+			this.SuspendLayout();
+			// 
+			// btn_tongbu
+			// 
+			this.btn_tongbu.Location = new System.Drawing.Point(27, 46);
+			this.btn_tongbu.Margin = new System.Windows.Forms.Padding(2);
+			this.btn_tongbu.Name = "btn_tongbu";
+			this.btn_tongbu.Size = new System.Drawing.Size(92, 32);
+			this.btn_tongbu.TabIndex = 0;
+			this.btn_tongbu.Text = "同步方法";
+			this.btn_tongbu.UseVisualStyleBackColor = true;
+			this.btn_tongbu.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// btn_Async
+			// 
+			this.btn_Async.Location = new System.Drawing.Point(27, 112);
+			this.btn_Async.Margin = new System.Windows.Forms.Padding(2);
+			this.btn_Async.Name = "btn_Async";
+			this.btn_Async.Size = new System.Drawing.Size(92, 38);
+			this.btn_Async.TabIndex = 1;
+			this.btn_Async.Text = "异步方法";
+			this.btn_Async.UseVisualStyleBackColor = true;
+			this.btn_Async.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// btnAdvance
+			// 
+			this.btnAdvance.Location = new System.Drawing.Point(27, 175);
+			this.btnAdvance.Margin = new System.Windows.Forms.Padding(2);
+			this.btnAdvance.Name = "btnAdvance";
+			this.btnAdvance.Size = new System.Drawing.Size(92, 35);
+			this.btnAdvance.TabIndex = 2;
+			this.btnAdvance.Text = "AsyncAdvance";
+			this.btnAdvance.UseVisualStyleBackColor = true;
+			this.btnAdvance.Click += new System.EventHandler(this.btnAdvance_Click);
+			// 
+			// btnThreads
+			// 
+			this.btnThreads.Location = new System.Drawing.Point(166, 46);
+			this.btnThreads.Margin = new System.Windows.Forms.Padding(2);
+			this.btnThreads.Name = "btnThreads";
+			this.btnThreads.Size = new System.Drawing.Size(92, 32);
+			this.btnThreads.TabIndex = 3;
+			this.btnThreads.Text = "Threads";
+			this.btnThreads.UseVisualStyleBackColor = true;
+			this.btnThreads.Click += new System.EventHandler(this.btnThreads_Click);
+			// 
+			// btnThreadPool
+			// 
+			this.btnThreadPool.Location = new System.Drawing.Point(166, 112);
+			this.btnThreadPool.Margin = new System.Windows.Forms.Padding(2);
+			this.btnThreadPool.Name = "btnThreadPool";
+			this.btnThreadPool.Size = new System.Drawing.Size(92, 32);
+			this.btnThreadPool.TabIndex = 4;
+			this.btnThreadPool.Text = "ThreadPool";
+			this.btnThreadPool.UseVisualStyleBackColor = true;
+			this.btnThreadPool.Click += new System.EventHandler(this.btnThreadPool_Click);
+			// 
+			// btn_Task
+			// 
+			this.btn_Task.Location = new System.Drawing.Point(166, 175);
+			this.btn_Task.Margin = new System.Windows.Forms.Padding(2);
+			this.btn_Task.Name = "btn_Task";
+			this.btn_Task.Size = new System.Drawing.Size(92, 32);
+			this.btn_Task.TabIndex = 5;
+			this.btn_Task.Text = "Task";
+			this.btn_Task.UseVisualStyleBackColor = true;
+			this.btn_Task.Click += new System.EventHandler(this.btn_Task_Click);
+			// 
+			// btnParallel
+			// 
+			this.btnParallel.Location = new System.Drawing.Point(166, 240);
+			this.btnParallel.Margin = new System.Windows.Forms.Padding(2);
+			this.btnParallel.Name = "btnParallel";
+			this.btnParallel.Size = new System.Drawing.Size(92, 32);
+			this.btnParallel.TabIndex = 6;
+			this.btnParallel.Text = "Parallel";
+			this.btnParallel.UseVisualStyleBackColor = true;
+			this.btnParallel.Click += new System.EventHandler(this.btnParallel_Click);
+			// 
+			// Form1
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.ClientSize = new System.Drawing.Size(545, 314);
+			this.Controls.Add(this.btnParallel);
+			this.Controls.Add(this.btn_Task);
+			this.Controls.Add(this.btnThreadPool);
+			this.Controls.Add(this.btnThreads);
+			this.Controls.Add(this.btnAdvance);
+			this.Controls.Add(this.btn_Async);
+			this.Controls.Add(this.btn_tongbu);
+			this.Margin = new System.Windows.Forms.Padding(2);
+			this.Name = "Form1";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.Text = "Form1";
+			this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_tongbu;
+        private System.Windows.Forms.Button btn_Async;
         private System.Windows.Forms.Button btnAdvance;
-    }
+		private System.Windows.Forms.Button btnThreads;
+		private System.Windows.Forms.Button btnThreadPool;
+		private System.Windows.Forms.Button btn_Task;
+		private System.Windows.Forms.Button btnParallel;
+	}
 }
 
