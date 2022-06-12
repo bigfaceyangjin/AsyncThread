@@ -10,12 +10,12 @@ using System.Windows.Forms;
 using System.Threading;
 namespace Zhan.AsyncThread.Project
 {
-    public partial class Form1 : Form
-    {
-        public Form1()
-        {
-            InitializeComponent();
-        }
+	public partial class Form1 : Form
+	{
+		public Form1()
+		{
+			InitializeComponent();
+		}
 
 		#region 同步方法
 
@@ -122,7 +122,7 @@ namespace Zhan.AsyncThread.Project
 			Console.WriteLine($"*********************** btnAdvance_Click_End {Thread.CurrentThread.ManagedThreadId.ToString("x2")} *********************************");
 		}
 		#endregion
-		 
+
 		#region Thread
 		/// <summary>
 		/// .net1.0 推出 Threads
@@ -322,7 +322,7 @@ namespace Zhan.AsyncThread.Project
 				Task.Delay(1000).ContinueWith(t => { });//不卡界面 delay是表示不管你现在在干什么 反正我1000ms后执行这个动作 不卡界面
 				Thread.Sleep(1000);//卡界面 
 								   //如果既不想卡界面 又要用Thread 那就只有在线程里用Thread  与Thread是一样的效果
-				Task.Run(()=> {
+				Task.Run(() => {
 					Thread.Sleep(1000);//不会卡界面
 				});
 			}
@@ -338,7 +338,7 @@ namespace Zhan.AsyncThread.Project
 		/// <param name="e"></param>
 		private void btnParallel_Click(object sender, EventArgs e)
 		{
-			Console.WriteLine("*********** btnParallel_Click_Start " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " ***********"); 
+			Console.WriteLine("*********** btnParallel_Click_Start " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " ***********");
 			{
 				//parallel启动异步多线程的三种方式 
 				//1.
@@ -359,7 +359,7 @@ namespace Zhan.AsyncThread.Project
 				//Parallel.For(0,5,parallelOptions, x => { this.Coding("朱展", "开发"); });
 
 				//那怎么做到不卡界面呢？  包一层 没有什么是包一层不能解决的 如果有 那就再包一层
-				Task.Run(()=> {
+				Task.Run(() => {
 					Parallel.For(0, 5, parallelOptions, x => { this.Coding("朱展", "开发"); });
 				});
 			}
@@ -371,15 +371,15 @@ namespace Zhan.AsyncThread.Project
 		/// </summary>
 		/// <param name="name"></param>
 		private void DoNothing(string name)
-        {
-            Console.WriteLine($"************* DoNothing Start {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
-            long rs = 0;
-            for (int i = 0; i < 1000000000; i++)
-            {
-                rs += i;
-            } 
-            Console.WriteLine($"************* DoNothing End {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
-        }
+		{
+			Console.WriteLine($"************* DoNothing Start {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
+			long rs = 0;
+			for (int i = 0; i < 1000000000; i++)
+			{
+				rs += i;
+			}
+			Console.WriteLine($"************* DoNothing End {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
+		}
 
 		private void DoSomething(object name)
 		{
@@ -392,7 +392,8 @@ namespace Zhan.AsyncThread.Project
 			Console.WriteLine($"************* DoNothing End {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
 		}
 
-		private void Coding(string name,string project) {
+		private void Coding(string name, string project)
+		{
 			Console.WriteLine($"********** Coding {name} Start {project} ********** {Thread.CurrentThread.ManagedThreadId.ToString("x2")}");
 			long temp = 0;
 			for (int i = 0; i < 1000000000; i++)
@@ -407,12 +408,13 @@ namespace Zhan.AsyncThread.Project
 		/// </summary>
 		/// <param name="act"></param>
 		/// <param name="call"></param>
-		private void WaitThreadCallBack(Action act,Action<int> call) {
-			Thread thread = new Thread(x=> {
-				 act.Invoke();
+		private void WaitThreadCallBack(Action act, Action<int> call)
+		{
+			Thread thread = new Thread(x => {
+				act.Invoke();
 				call.Invoke(123);
 			});
-			thread.Start(); 
+			thread.Start();
 		}
 		/// <summary>
 		/// Thread回调 带返回值
@@ -420,10 +422,11 @@ namespace Zhan.AsyncThread.Project
 		/// <typeparam name="T"></typeparam>
 		/// <param name="func"></param>
 		/// <returns></returns>
-		private Func<T> WaitThreadWithResult<T>(Func<T> func) {
+		private Func<T> WaitThreadWithResult<T>(Func<T> func)
+		{
 			T t = default(T);
-			Thread thread = new Thread(x=> {
-				t = func.Invoke(); 
+			Thread thread = new Thread(x => {
+				t = func.Invoke();
 			});
 			thread.Start();
 			return () => {
@@ -443,7 +446,7 @@ namespace Zhan.AsyncThread.Project
 		/// <param name="callback"></param>
 		private void WaitThreadPoolCall(Action act, Action<int> callback)
 		{
-			ThreadPool.QueueUserWorkItem(x=> {
+			ThreadPool.QueueUserWorkItem(x => {
 				act.Invoke();
 				callback.Invoke(1);
 			});
@@ -454,16 +457,17 @@ namespace Zhan.AsyncThread.Project
 		/// <typeparam name="T"></typeparam>
 		/// <param name="func"></param>
 		/// <returns></returns>
-		private T WaitThreadPoolResult<T>(Func<T> func) {
+		private T WaitThreadPoolResult<T>(Func<T> func)
+		{
 			T result = default(T);
 			ManualResetEvent manualReset = new ManualResetEvent(false);
 			ThreadPool.QueueUserWorkItem(x => {
-				 result= func.Invoke();
+				result = func.Invoke();
 				manualReset.Set();
 			});
 			manualReset.Reset();
 			//manualReset.WaitOne();
 			return result;
-		} 
+		}
 	}
 }
