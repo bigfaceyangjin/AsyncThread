@@ -367,7 +367,7 @@ namespace Zhan.AsyncThread.Project
 		}
 		#endregion
 		/// <summary>
-		/// 线程测试方法
+		/// 线程测试的方法
 		/// </summary>
 		/// <param name="name"></param>
 		private void DoNothing(string name)
