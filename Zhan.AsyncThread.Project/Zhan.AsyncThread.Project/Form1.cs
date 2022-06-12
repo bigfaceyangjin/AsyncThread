@@ -26,122 +26,16 @@ namespace Zhan.AsyncThread.Project
 		/// <param name="e"></param>
 		private void button1_Click(object sender, EventArgs e)
 		{
-			//Console.WriteLine("----  start 同步方法 ----");
-			//int z = 1;
-			//int m = 3;
-			//int x = z * m;
-			//for (int i = 0; i < 5; i++)
-			//{
-			//	string name = string.Format("btn_1" + i);
-			//	this.DoNothing(name);
-			//}
-			//Console.WriteLine("----   end  同步方法 ----"); 
-		}
-		#endregion
-
-		#region 私有方法
-		/// <summary>
-		/// 线程测试方法
-		/// </summary>
-		/// <param name="name"></param>
-		private void DoNothing(string name)
-		{
-			Console.WriteLine($"************* DoNothing Start {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
-			long rs = 0;
-			for (int i = 0; i < 1000000000; i++)
+			Console.WriteLine("----  start 同步方法 ----");
+			int z = 1;
+			int m = 3;
+			int x = z * m;
+			for (int i = 0; i < 5; i++)
 			{
-				rs += i;
+				string name = string.Format("btn_1" + i);
+				this.DoNothing(name);
 			}
-			Console.WriteLine($"************* DoNothing End {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
-		}
-
-		private void DoSomething(object name)
-		{
-			Console.WriteLine($"************* DoNothing Start {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
-			long rs = 0;
-			for (int i = 0; i < 1000000000; i++)
-			{
-				rs += i;
-			}
-			Console.WriteLine($"************* DoNothing End {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
-		}
-
-		private void Coding(string name, string project)
-		{
-			Console.WriteLine($"********** Coding {name} Start {project} ********** {Thread.CurrentThread.ManagedThreadId.ToString("x2")}");
-			long temp = 0;
-			for (int i = 0; i < 1000000000; i++)
-			{
-				temp += i;
-			}
-			Console.WriteLine($"********** Coding {name} End {project} ********** {Thread.CurrentThread.ManagedThreadId.ToString("x2")}");
-		}
-
-		/// <summary>
-		/// Thread手动回调 无返回值
-		/// </summary>
-		/// <param name="act"></param>
-		/// <param name="call"></param>
-		private void WaitThreadCallBack(Action act, Action<int> call)
-		{
-			Thread thread = new Thread(x => {
-				act.Invoke();
-				call.Invoke(123);
-			});
-			thread.Start();
-		}
-		/// <summary>
-		/// Thread回调 带返回值
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="func"></param>
-		/// <returns></returns>
-		private Func<T> WaitThreadWithResult<T>(Func<T> func)
-		{
-			T t = default(T);
-			Thread thread = new Thread(x => {
-				t = func.Invoke();
-			});
-			thread.Start();
-			return () => {
-				//while (thread.ThreadState != ThreadState.Stopped)
-				//{
-				//	Thread.Sleep(200);
-				//}
-				thread.Join();
-				return t;
-			};
-		}
-
-		/// <summary>
-		/// ThreadPool 无返回值回调
-		/// </summary>
-		/// <param name="act"></param>
-		/// <param name="callback"></param>
-		private void WaitThreadPoolCall(Action act, Action<int> callback)
-		{
-			ThreadPool.QueueUserWorkItem(x => {
-				act.Invoke();
-				callback.Invoke(1);
-			});
-		}
-		/// <summary>
-		/// ThreadPool带返回值异步调用 与BeginEnd类似
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="func"></param>
-		/// <returns></returns>
-		private T WaitThreadPoolResult<T>(Func<T> func)
-		{
-			T result = default(T);
-			ManualResetEvent manualReset = new ManualResetEvent(false);
-			ThreadPool.QueueUserWorkItem(x => {
-				result = func.Invoke();
-				manualReset.Set();
-			});
-			manualReset.Reset();
-			//manualReset.WaitOne();
-			return result;
+			Console.WriteLine("----   end  同步方法 ----");
 		}
 		#endregion
 
@@ -390,7 +284,7 @@ namespace Zhan.AsyncThread.Project
 				list.Add(Task.Run(() => { this.Coding("李四", "Service"); }));
 				list.Add(Task.Run(() => { this.Coding("王五", "Jump"); }));
 				list.Add(Task.Run(() => { this.Coding("朱展", "Api"); }));
-				list.Add(Task.Run(() => { this.Coding("杨锦", "Monitor"); })); 
+				list.Add(Task.Run(() => { this.Coding("杨锦", "Monitor"); }));
 				//Task.WaitAny(list.ToArray());//等待某个任务完成
 				//Console.WriteLine("已完成某项开发...");
 				//Task.WaitAll(list.ToArray());//等待所有任务完成
@@ -472,124 +366,104 @@ namespace Zhan.AsyncThread.Project
 			Console.WriteLine("*********** btnParallel_Click_End " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " ***********");
 		}
 		#endregion
+		/// <summary>
+		/// 线程测试方法
+		/// </summary>
+		/// <param name="name"></param>
+		private void DoNothing(string name)
+        {
+            Console.WriteLine($"************* DoNothing Start {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
+            long rs = 0;
+            for (int i = 0; i < 1000000000; i++)
+            {
+                rs += i;
+            } 
+            Console.WriteLine($"************* DoNothing End {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
+        }
 
-		#region 1.异常处理、线程取消、多线程的临时变量 2.线程安全和lock锁 3.await/async
-		private static readonly  object btnThreadCoreLock = new object();//Lock锁引用类型 CSDN标准写法
-		private void btnThreadCore_Click(object sender, EventArgs e)
+		private void DoSomething(object name)
 		{
-			Console.WriteLine("*********** btnThreadCore_Click_Start " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " ***********");
-			try
+			Console.WriteLine($"************* DoNothing Start {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
+			long rs = 0;
+			for (int i = 0; i < 1000000000; i++)
 			{
-				#region 多线程异常处理
-				//TaskFactory taskFactory = new TaskFactory();
-				//List<Task> taskList = new List<Task>();
-				//for (int i = 0; i < 15; i++)
-				//{
-				//	string name = "btnThreadCore_Click_" + (i + 1);
-				//	Action<object> act = j =>
-				//	{
-				//		try
-				//		{
-				//			if (j.Equals($"btnThreadCore_Click_9") || j.Equals($"btnThreadCore_Click_10"))
-				//			{
-				//				throw new Exception($"{j} 执行失败");
-				//			}
-				//			Console.WriteLine($"{j} 执行成功");
-				//		}
-				//		catch (Exception ex)
-				//		{
-				//			Console.WriteLine(ex.Message);
-				//		}
-				//	};
-				//	taskList.Add(taskFactory.StartNew(act, name));
-				//}
-				#endregion
-
-				#region 线程的取消
-				//CancellationTokenSource cts = new CancellationTokenSource();
-				//List<Task> taskList = new List<Task>();
-				//TaskFactory taskFactory = new TaskFactory();
-				//for (int i = 0; i < 10; i++)
-				//{
-				//	string name = string.Format("btnThreadCore_{0}",i+1);
-				//	Action<object> act = x => {
-				//		try
-				//		{ 
-				//			if (x.ToString().Equals("btnThreadCore_5") || x.ToString().Equals("btnThreadCore_6"))
-				//			{
-				//				throw new Exception($"{x}执行失败 {Thread.CurrentThread.ManagedThreadId.ToString("x2")}");
-				//			}
-				//			if (cts.IsCancellationRequested)
-				//			{
-				//				Console.WriteLine($"{x}放弃执行 {Thread.CurrentThread.ManagedThreadId.ToString("x2")}");
-				//				return;
-				//			}
-				//			else {
-				//				Console.WriteLine($"{x}执行成功 {Thread.CurrentThread.ManagedThreadId.ToString("x2")}");
-				//			}
-				//		}
-				//		catch (Exception ex)
-				//		{
-				//			cts.Cancel();
-				//			Console.WriteLine(ex.Message);
-				//		}
-				//	};
-				//	taskList.Add(taskFactory.StartNew(act,name,cts.Token));
-				//}
-				//Task.WaitAll(taskList.ToArray());
-				#endregion
-
-				#region 临时变量 
-				//for (int i = 0; i < 10; i++)
-				//{
-				//	//Thread.Sleep(200);
-				//	int k = i;
-				//	k = i;
-				//	Task.Run(()=> {
-				//		Console.WriteLine($"k={k} i={i}");
-				//	});
-				//}
-				#endregion
-
-				#region 线程安全
-				List<int> numList = new List<int>();
-				List<Task> taskList = new List<Task>();
-				int total = 0;
-				for (int i = 0; i < 1000000; i++)
-				{
-					int k = i;
-					taskList.Add(Task.Run(()=> {
-						//lock后的方法块 只允许一个线程进入，相当于对这个引用变量占用这个引用链接 不要用string 因为享元
-						//引用链接内存边界存在一个值为-1，当有人占用时为0，无人占用时为-1 虽然没了并发 但影响了性能
-						lock (btnThreadCoreLock) { 
-							total += 1;
-							numList.Add(k);
-						}
-						//Monitor与lock功能一致 {}就是锁住的内容 只允许单线程操作
-						//Monitor.Enter(btnThreadCoreLock);
-						//{
-
-						//}
-						//Monitor.Exit(btnThreadCoreLock);
-					}));
-				}
-				Task.WaitAll(taskList.ToArray()); 
-				Console.WriteLine($"numList总数量：{numList.Count} total={total}");
-				#endregion
+				rs += i;
 			}
-			catch (AggregateException agp)
-			{
-				foreach (var item in agp.InnerExceptions)
-				{
-					Console.WriteLine(item.Message);
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
-			}
-			Console.WriteLine("*********** btnThreadCore_Click_End " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " ***********"); 
+			Console.WriteLine($"************* DoNothing End {name} " + Thread.CurrentThread.ManagedThreadId.ToString("x2") + " *************");
 		}
-		#endregion
+
+		private void Coding(string name,string project) {
+			Console.WriteLine($"********** Coding {name} Start {project} ********** {Thread.CurrentThread.ManagedThreadId.ToString("x2")}");
+			long temp = 0;
+			for (int i = 0; i < 1000000000; i++)
+			{
+				temp += i;
+			}
+			Console.WriteLine($"********** Coding {name} End {project} ********** {Thread.CurrentThread.ManagedThreadId.ToString("x2")}");
+		}
+
+		/// <summary>
+		/// Thread手动回调 无返回值
+		/// </summary>
+		/// <param name="act"></param>
+		/// <param name="call"></param>
+		private void WaitThreadCallBack(Action act,Action<int> call) {
+			Thread thread = new Thread(x=> {
+				 act.Invoke();
+				call.Invoke(123);
+			});
+			thread.Start(); 
+		}
+		/// <summary>
+		/// Thread回调 带返回值
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="func"></param>
+		/// <returns></returns>
+		private Func<T> WaitThreadWithResult<T>(Func<T> func) {
+			T t = default(T);
+			Thread thread = new Thread(x=> {
+				t = func.Invoke(); 
+			});
+			thread.Start();
+			return () => {
+				//while (thread.ThreadState != ThreadState.Stopped)
+				//{
+				//	Thread.Sleep(200);
+				//}
+				thread.Join();
+				return t;
+			};
+		}
+
+		/// <summary>
+		/// ThreadPool 无返回值回调
+		/// </summary>
+		/// <param name="act"></param>
+		/// <param name="callback"></param>
+		private void WaitThreadPoolCall(Action act, Action<int> callback)
+		{
+			ThreadPool.QueueUserWorkItem(x=> {
+				act.Invoke();
+				callback.Invoke(1);
+			});
+		}
+		/// <summary>
+		/// ThreadPool带返回值异步调用 与BeginEnd类似
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="func"></param>
+		/// <returns></returns>
+		private T WaitThreadPoolResult<T>(Func<T> func) {
+			T result = default(T);
+			ManualResetEvent manualReset = new ManualResetEvent(false);
+			ThreadPool.QueueUserWorkItem(x => {
+				 result= func.Invoke();
+				manualReset.Set();
+			});
+			manualReset.Reset();
+			//manualReset.WaitOne();
+			return result;
+		} 
 	}
 }

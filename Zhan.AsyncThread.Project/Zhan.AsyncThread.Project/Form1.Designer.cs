@@ -35,7 +35,6 @@
 			this.btnThreadPool = new System.Windows.Forms.Button();
 			this.btn_Task = new System.Windows.Forms.Button();
 			this.btnParallel = new System.Windows.Forms.Button();
-			this.btnThreadCore = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// btn_tongbu
@@ -115,22 +114,11 @@
 			this.btnParallel.UseVisualStyleBackColor = true;
 			this.btnParallel.Click += new System.EventHandler(this.btnParallel_Click);
 			// 
-			// btnThreadCore
-			// 
-			this.btnThreadCore.Location = new System.Drawing.Point(27, 240);
-			this.btnThreadCore.Name = "btnThreadCore";
-			this.btnThreadCore.Size = new System.Drawing.Size(92, 32);
-			this.btnThreadCore.TabIndex = 7;
-			this.btnThreadCore.Text = "ThreadCore";
-			this.btnThreadCore.UseVisualStyleBackColor = true;
-			this.btnThreadCore.Click += new System.EventHandler(this.btnThreadCore_Click);
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(545, 314);
-			this.Controls.Add(this.btnThreadCore);
 			this.Controls.Add(this.btnParallel);
 			this.Controls.Add(this.btn_Task);
 			this.Controls.Add(this.btnThreadPool);
@@ -155,7 +143,6 @@
 		private System.Windows.Forms.Button btnThreadPool;
 		private System.Windows.Forms.Button btn_Task;
 		private System.Windows.Forms.Button btnParallel;
-		private System.Windows.Forms.Button btnThreadCore;
 	}
 }
 
