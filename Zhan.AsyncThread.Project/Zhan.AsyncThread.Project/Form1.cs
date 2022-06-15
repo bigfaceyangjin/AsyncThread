@@ -590,7 +590,17 @@ namespace Zhan.AsyncThread.Project
 			return result;
 		}
 
-        
-         
-    }
+		#region await/async
+		private async void btnawait_Click(object sender, EventArgs e)
+		{
+			Console.WriteLine("********** btnawait_Click_Start **********");
+			Task task= Task.Run(()=> {
+				this.DoNothing("btnawait_Click");
+			});
+			Console.WriteLine("********** btnawait_Click_End **********");
+			await task;//await后面的代码就相当于给task这个线程启动了一个回调 之后的代码相当于启动了另一个线程来执行 有可能是task那个线程，也有可能是主线程 等于在线程池中任意取用
+			Console.WriteLine("Result");
+		}
+		#endregion
+	}
 }
